@@ -54,7 +54,7 @@ true or false -- 게임이 끝났으면 true, 턴을 계속 해야하면 false
    nil -- x, y가 게임판 밖의 좌표일 때
    or 0 -- 해당 좌표에 아무것도 없을 때
    or 1 or 2 or 3 -- 해당 좌표에 각각 딸기, 오렌지, 사과 가 있을 때
-   or "ME' -- 해당 좌표에 내가 있을 때
+   or "ME" -- 해당 좌표에 내가 있을 때
    or "ENEMY" -- 해당 좌표에 적이 있을 때
 ```
 
@@ -71,7 +71,17 @@ true or false -- 게임이 끝났으면 true, 턴을 계속 해야하면 false
 
 ### client:get_my_color(), client:get_enemy_color()
 
+#### Returns
+```lua
+"RED" or "BLUE"
+```
+
 ### client:get_my_pos(), client:get_enemy_pos()
+
+#### Returns
+```lua
+{ [1] = x, [2] = y }
+```
 
 ### client:log(...)
 디버그 로그를 찍는데 씁시다.
