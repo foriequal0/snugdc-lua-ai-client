@@ -19,7 +19,7 @@ while not client:finished() do
       local dirs = {"UP", "DOWN", "LEFT", "RIGHT"}
       dir = dirs[math.random(4)] -- 네 방향중 무작위로 찍어서
       board = client:get_board_dir(dir) -- 그 방향에 뭐가 있는지 가져와보고
-      if board ~= nil then -- 보드를 벗어난게 아니라면(뭐라도 있으면)
+      if board ~= nil and board ~= "ENEMY"then -- 보드를 벗어난게 아니라면(뭐라도 있으면)
          break -- 그방향으로 결정
       end
    end

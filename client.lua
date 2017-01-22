@@ -69,6 +69,7 @@ function client:end_turn_with(move)
    
    client:assert(contains(moves, move), "Move should be one of " .. arr2str(moves) .. ":", move)
    print(move)
+   io.flush()
 
    local move_result = io.read("*line")
    client:assert(contains(move_results, move_result),
@@ -91,6 +92,9 @@ function client:end_turn_with(move)
    if enemy ~= "FAIL" then
       local newpos = moveto(client:get_enemy_pos(), enemy)
       enemypick = self:get_board_at(newpos[1], newpos[2])
+      if enemypick == "ME" then
+        enemypick = 0
+      end
       client:assert(contains(board_values, enemypick), "Unexpected enemy pick", enemypick)
 
       client:_set_enemy_pos(newpos)
@@ -216,11 +220,13 @@ end
 function client:log(...)
    assert(self.logfile, "Log file wasn't opened")
    self.logfile:write("(" .. self.color .. ") [LOG] " .. join(" ", ...), "\n")
+   self.logfile:flush()
 end
 
 function client:error(...)
    assert(self.logfile, "Log file wasn't opened")
    self.logfile:write("(" .. self.color .. ") [ERROR] " .. join(" " , ...), "\n")
+   self.logfile:flush()
 end
 
 function client:assert(cond, ...)
@@ -233,6 +239,7 @@ end
 
 -- Initialize
 do
+   io.stdout:setvbuf("no")
    -- get color
    local color = io.read("*line")
    assert(color, "Color nil")
@@ -242,6 +249,7 @@ do
    -- open error log
    client.logfile = io.open(color .. ".log", "a")
    assert(client.logfile, "Log File cannot be opened:", color .. ".log")
+   client.logfile:setvbuf("no")
 
    -- read board
    local board = {}
